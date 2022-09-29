@@ -5,15 +5,15 @@ import { store } from "./store/configureStore";
 import { Router } from "./Router";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "./styles/GlobalStyle";
-import theme from "./styles/Theme";
+import { theme } from "./styles/Theme";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
 
 root.render(
   <Provider store={store}>
-    <GlobalStyle theme={theme} />
-    <ThemeProvider>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
       <Router />
     </ThemeProvider>
   </Provider>

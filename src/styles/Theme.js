@@ -7,15 +7,22 @@ const colors = {
 };
 
 const fontSizes = {
-  sm: "12px",
-  base: "14px",
-  lg: "16px",
+  sm: "14px",
+  base: "16px",
+  lg: "18px",
   lx: "20px",
+  title: "24px",
 };
 
-const theme = {
+const fontWeights = {
+  sm: "500",
+  base: "600",
+  lg: "700",
+  title: "800",
+};
+
+export const theme = {
   colors,
   fontSizes,
+  fontWeights,
 };
-
-export default theme;
