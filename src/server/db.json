@@ -1,3 +1,76 @@
 {
-  "users": []
+  "users": [
+    {
+      "email": "test123@naver.com",
+      "password": "$2a$10$Ad2j8saKjIVyvDdKi1TJvO2oUM4Cuaf3V0bOuCRGY5chF4xSLeEFm",
+      "nickname": "심심이",
+      "id": 1,
+      "joined": [
+        {
+          "id": 4,
+          "category": "스터디",
+          "location": "인천",
+          "title": "대학생들만 모집! 중간고사 대비 같이 해요"
+        }
+      ]
+    }
+  ],
+  "mainContent": [
+    {
+      "id": 1,
+      "category": "스터디",
+      "email": "test123@naver.com",
+      "nickname": "심심이",
+      "location": "서울",
+      "title": "토익 스터디 같이하실 분",
+      "content": "9월 30일 서울 양천구에서 토익 스터디 함께 하실 분 모집합니다!",
+      "join": 5,
+      "joined": 1
+    },
+    {
+      "id": 4,
+      "category": "스터디",
+      "email": "test1234@naver.com",
+      "nickname": "망고",
+      "location": "인천",
+      "title": "대학생들만 모집! 중간고사 대비 같이 해요",
+      "content": "혼자서 하려니 너무 집중이 안되네요...모여서 중간고사 대비 같이 하실 분들 구합니다.",
+      "join": 4,
+      "joined": 2
+    },
+    {
+      "category": "운동",
+      "email": "test123@naver.com",
+      "nickname": "심심이",
+      "location": "서울",
+      "title": "같이 러닝하실 분 구합니당><",
+      "content": "일주일에 한번씩 여의도 한강공원에서 러닝 하실 분!\n혼자하기에는 넘 심심할 것 같아서,,,\n",
+      "join": 0,
+      "joined": 0,
+      "id": 6
+    }
+  ],
+  "comment": [
+    {
+      "id": 1,
+      "contentId": 1,
+      "email": "test123@naver.com",
+      "nickname": "심심이",
+      "comment": "궁금한 점이 있으신 분들은 댓글 남겨주세요!"
+    },
+    {
+      "contentId": 3,
+      "email": "test123@naver.com",
+      "nickname": "심심이",
+      "comment": "많은 지원 부탁드립니다~",
+      "id": 3
+    },
+    {
+      "contentId": 3,
+      "email": "test123@naver.com",
+      "nickname": "심심이",
+      "comment": "댓글~~~><",
+      "id": 5
+    }
+  ]
 }

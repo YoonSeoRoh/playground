@@ -1,43 +1,57 @@
 import React from "react";
-import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faFile } from "@fortawesome/free-regular-svg-icons";
+
+import { logout } from "../../reducers/user";
 
 import Button from "../Button";
 
-const HeaderContainer = styled.section`
-  width: 100%;
-  height: 10vh;
-  position: fixed;
-  top: 0;
-  padding: 0 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const Title = styled.div`
-  color: ${({ theme }) => theme.colors.primary};
-  font-size: ${({ theme }) => theme.fontSizes.title};
-  font-weight: ${({ theme }) => theme.fontWeights.title};
-`;
-
-const ButtonBlock = styled.div`
-  display: flex;
-  width: 15%;
-`;
+import * as S from "./styles";
 
 const Header = () => {
+  const { loginDone } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
   return (
-    <HeaderContainer>
-      <Title>PLAYGROUND</Title>
-      <ButtonBlock>
-        <Button buttonStyle="transparent" textSize="base">
-          로그인
-        </Button>
-        <Button buttonStyle="primary" textSize="base">
-          회원가입
-        </Button>
-      </ButtonBlock>
-    </HeaderContainer>
+    <S.HeaderContainer>
+      <S.Title onClick={() => navigate("/")}>PLAYGROUND</S.Title>
+      {loginDone ? (
+        <S.ProfileBlock>
+          <S.ImageBlock onClick={() => navigate("/writecontent")}>
+            <FontAwesomeIcon icon={faFile} />
+          </S.ImageBlock>
+          <S.ImageBlock onClick={() => navigate("/mypage")}>
+            <FontAwesomeIcon icon={faUser} />
+          </S.ImageBlock>
+          <Button onClick={handleLogout} buttonStyle="logout" textSize="base">
+            로그아웃
+          </Button>
+        </S.ProfileBlock>
+      ) : (
+        <S.ButtonBlock>
+          <Button
+            onClick={() => navigate("/login")}
+            buttonStyle="transparent"
+            textSize="base"
+          >
+            로그인
+          </Button>
+          <Button
+            onClick={() => navigate("/signup")}
+            buttonStyle="primary"
+            textSize="base"
+          >
+            회원가입
+          </Button>
+        </S.ButtonBlock>
+      )}
+    </S.HeaderContainer>
   );
 };
 

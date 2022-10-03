@@ -17,7 +17,13 @@ export const GlobalStyle = createGlobalStyle`
         padding: 0;
         list-style: none;
     }
+    input, textarea{
+        caret-color: ${({ theme }) => theme.colors.primary};
+    }
     input: focus {
+        outline: none;
+    }
+    textarea: focus{
         outline: none;
     }
     img{
