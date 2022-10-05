@@ -7,6 +7,7 @@ import {
   getCommentsThunk,
   addCommentThunk,
   deleteCommentThunk,
+  editCommentThunk,
 } from "../actions/content";
 
 const initialState = {
@@ -31,6 +32,9 @@ const initialState = {
   deleteComment: null,
   deleteCommentLoading: false,
   deleteCommentDone: false,
+  editComment: null,
+  editCommentLoading: false,
+  editCommentDone: false,
 };
 
 export const contentSlice = createSlice({
@@ -101,6 +105,15 @@ export const contentSlice = createSlice({
         state.deleteCommentLoading = false;
         state.deleteCommentDone = true;
         state.deleteCommentData = action.payload;
+      })
+      .addCase(editCommentThunk.pending, (state, action) => {
+        state.editCommentLoading = true;
+        state.editCommentDone = false;
+      })
+      .addCase(editCommentThunk.fulfilled, (state, action) => {
+        state.editCommentLoading = false;
+        state.editCommentDone = true;
+        state.editCommentData = action.payload;
       });
   },
 });

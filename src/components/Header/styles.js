@@ -38,4 +38,7 @@ export const ImageBlock = styled.div`
   padding-left: 10px;
   cursor: pointer;
   font-size: ${({ theme }) => theme.fontSizes.title};
+  a {
+    color: ${({ theme }) => theme.colors.lightBlack};
+  }
 `;

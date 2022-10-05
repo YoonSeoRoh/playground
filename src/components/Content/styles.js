@@ -56,11 +56,7 @@ export const DetailWrapper = styled.div`
   padding-top: 10px;
 `;
 
-export const DetailInnerWrapper = styled.div`
-  display: flex;
-`;
-
-export const ButtonWrapper = styled.div`
+export const FlexWrapper = styled.div`
   display: flex;
 `;
 

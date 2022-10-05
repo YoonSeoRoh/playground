@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -39,20 +39,19 @@ export default function WriteContent() {
     resolver: yupResolver(writeValidation),
   });
 
-  const getCategory = (name) => {
+  const getCategory = useCallback((name) => {
     setCategory(name);
-  };
+  }, []);
 
-  const getCity = (name) => {
+  const getCity = useCallback((name) => {
     setCity(name);
-  };
+  }, []);
 
   const handleChange = ({ name, value }) => {
     setValue(name, value, { shouldValidate: true });
   };
 
-  const handleSubmit = () => {
-    //api 연결
+  const handleSubmit = useCallback(() => {
     if (!isValid) {
       setModal(true);
       setMsg("제목 및 내용을 입력해주세요.");
@@ -65,13 +64,18 @@ export default function WriteContent() {
           location: city,
           title: getValues("title"),
           content: getValues("content"),
-          join: 0,
+          join: getValues("join"),
           joined: 0,
         })
       );
     }
     reset();
-  };
+  }, [category, city, dispatch, getValues, isValid, loginData, reset]);
+
+  const handleModal = useCallback(() => {
+    setModal(!modal);
+    navigate("/login");
+  }, [modal, navigate]);
 
   useEffect(() => {
     if (!loginData) {
@@ -90,6 +94,13 @@ export default function WriteContent() {
       <DropDownMenu data={tabList} getData={getCategory} />
       <DropDownMenu data={cityList} getData={getCity} />
       <form>
+        <S.Label>모집 인원</S.Label>
+        <Input
+          placeholder="모집 인원을 숫자로 입력하세요."
+          inputStyle="border"
+          {...register("join")}
+          onChange={handleChange}
+        />
         <S.Label>제목</S.Label>
         <Input
           placeholder="제목을 입력하세요."
@@ -105,13 +116,11 @@ export default function WriteContent() {
         />
         <S.ButtonContainer>
           <S.ButtonBlock>
-            <Button
-              buttonStyle="transparent"
-              textSize="large"
-              onClick={() => navigate("/")}
-            >
-              홈으로
-            </Button>
+            <Link to="/">
+              <Button buttonStyle="transparent" textSize="large">
+                홈으로
+              </Button>
+            </Link>
           </S.ButtonBlock>
           <S.ButtonBlock>
             <Button
@@ -129,9 +138,7 @@ export default function WriteContent() {
         isOpen={modal}
         title={msg}
         buttonTitle="확인"
-        onClick={() => {
-          setModal(!modal);
-        }}
+        onClick={handleModal}
       />
     </S.WriteContainer>
   );

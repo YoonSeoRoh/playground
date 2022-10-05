@@ -2,13 +2,14 @@ import React from "react";
 import * as S from "./styles";
 
 const Input = ({
-  inputStyle = "borderNone",
+  inputStyle,
   type = "text",
   name = "",
   onChange,
   inputRef,
   ...rest
 }) => {
+  console.log("인풋 렌더링");
   const chanageHandler = (e) => {
     const { value } = e.target;
     onChange && onChange({ name, value });

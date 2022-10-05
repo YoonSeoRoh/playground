@@ -26,16 +26,18 @@ export const signupThunk = createAsyncThunk("SIGN_UP", async (formData) => {
   return data;
 });
 
-export const addJoinedThunk = createAsyncThunk(
+export const editJoinedThunk = createAsyncThunk(
   "ADD_JOINED",
   async (formData) => {
-    const response = await fetch("http://localhost:4444/users", {
-      method: "POST",
+    const response = await fetch(`http://localhost:4444/users/${formData.id}`, {
+      method: "PATCH",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify({
+        joined: formData.joined,
+      }),
     });
     const data = await response.json();
     return data;

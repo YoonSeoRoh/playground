@@ -22,12 +22,10 @@ export default function Main() {
     }
   });
 
-  const handleClick = () => {};
-
   return (
     <>
       {contentsData && contentsData.length !== 0 ? (
-        <S.Container onClick={handleClick}>
+        <S.Container>
           {contentsData?.map((item, index) => (
             <Card key={index} data={item} />
           ))}

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import * as S from "./styles";
 
-export default function DropDownMenu(props) {
+const DropDownMenu = (props) => {
+  console.log("드롭메뉴 렌더링");
   const [data, setData] = useState("");
 
   const handleDataChange = (e) => {
@@ -20,4 +21,6 @@ export default function DropDownMenu(props) {
       </S.Select>
     </section>
   );
-}
+};
+
+export default React.memo(DropDownMenu);

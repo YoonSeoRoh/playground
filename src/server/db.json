@@ -5,14 +5,14 @@
       "password": "$2a$10$Ad2j8saKjIVyvDdKi1TJvO2oUM4Cuaf3V0bOuCRGY5chF4xSLeEFm",
       "nickname": "심심이",
       "id": 1,
-      "joined": [
-        {
-          "id": 4,
-          "category": "스터디",
-          "location": "인천",
-          "title": "대학생들만 모집! 중간고사 대비 같이 해요"
-        }
-      ]
+      "joined": []
+    },
+    {
+      "email": "test1234@naver.com",
+      "password": "$2a$10$HzAGPuvToSB5Rc2O0Su2/uPMAut37RX9fzgNZcmSoXWpgWWwFVDnS",
+      "nickname": "바밤바",
+      "id": 2,
+      "joined": []
     }
   ],
   "mainContent": [
@@ -25,7 +25,7 @@
       "title": "토익 스터디 같이하실 분",
       "content": "9월 30일 서울 양천구에서 토익 스터디 함께 하실 분 모집합니다!",
       "join": 5,
-      "joined": 1
+      "joined": 0
     },
     {
       "id": 4,
@@ -36,7 +36,7 @@
       "title": "대학생들만 모집! 중간고사 대비 같이 해요",
       "content": "혼자서 하려니 너무 집중이 안되네요...모여서 중간고사 대비 같이 하실 분들 구합니다.",
       "join": 4,
-      "joined": 2
+      "joined": 3
     },
     {
       "category": "운동",
@@ -48,6 +48,17 @@
       "join": 0,
       "joined": 0,
       "id": 6
+    },
+    {
+      "category": "기타",
+      "email": "test1234@naver.com",
+      "nickname": "바밤바",
+      "location": "강원",
+      "title": "주기적으로 드라이브 즐기실 분!",
+      "content": "운전하는 거 좋아하시는 분들끼리 가까운 곳 1박 2일로 놀러가요!",
+      "join": "10",
+      "joined": 0,
+      "id": 7
     }
   ],
   "comment": [
@@ -71,6 +82,27 @@
       "nickname": "심심이",
       "comment": "댓글~~~><",
       "id": 5
+    },
+    {
+      "contentId": 6,
+      "email": "test123@naver.com",
+      "nickname": "심심이",
+      "comment": "댓글~~~><",
+      "id": 6
+    },
+    {
+      "contentId": 7,
+      "email": "test123@naver.com",
+      "nickname": "심심이",
+      "comment": "표는 3장 있습니다!",
+      "id": 7
+    },
+    {
+      "contentId": 4,
+      "email": "test1234@naver.com",
+      "nickname": "바밤바",
+      "comment": "댓글 수정 테스트 중!",
+      "id": 8
     }
   ]
 }

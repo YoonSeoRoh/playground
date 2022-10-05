@@ -6,10 +6,11 @@ const Button = ({
   type = "button",
   disabled,
   onClick,
-  buttonStyle = "primary",
-  textSize = "sm",
+  buttonStyle,
+  textSize,
   ...rest
 }) => {
+  console.log("버튼 렌더링 됨");
   return (
     <S.StyledButton
       type={type}

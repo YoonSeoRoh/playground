@@ -15,7 +15,13 @@ export const Icon = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.title};
 `;
 
-export const ButtonWrapper = styled.div`
+export const EditButtonWrapper = styled.div`
+  position: absolute;
+  right: 85px;
+  width: 60px;
+`;
+
+export const DeleteButtonWrapper = styled.div`
   position: absolute;
   right: 20px;
   width: 60px;
@@ -29,4 +35,8 @@ export const Content = styled.div`
     font-weight: ${({ theme }) => theme.fontWeights.sm};
     color: ${({ theme }) => theme.colors.gray};
   }
+`;
+
+export const Edit = styled.div`
+  width: 100%;
 `;

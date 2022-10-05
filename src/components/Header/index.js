@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faFile } from "@fortawesome/free-regular-svg-icons";
 
@@ -14,20 +14,28 @@ const Header = () => {
   const { loginDone } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleLogout = () => {
+
+  const handleLogout = useCallback(() => {
     dispatch(logout());
     navigate("/");
-  };
+  }, [dispatch, navigate]);
+
   return (
     <S.HeaderContainer>
-      <S.Title onClick={() => navigate("/")}>PLAYGROUND</S.Title>
+      <Link to="/">
+        <S.Title>PLAYGROUND</S.Title>
+      </Link>
       {loginDone ? (
         <S.ProfileBlock>
-          <S.ImageBlock onClick={() => navigate("/writecontent")}>
-            <FontAwesomeIcon icon={faFile} />
+          <S.ImageBlock>
+            <Link to="/writecontent">
+              <FontAwesomeIcon icon={faFile} />
+            </Link>
           </S.ImageBlock>
-          <S.ImageBlock onClick={() => navigate("/mypage")}>
-            <FontAwesomeIcon icon={faUser} />
+          <S.ImageBlock>
+            <Link to="/mypage">
+              <FontAwesomeIcon icon={faUser} />
+            </Link>
           </S.ImageBlock>
           <Button onClick={handleLogout} buttonStyle="logout" textSize="base">
             로그아웃
@@ -35,20 +43,16 @@ const Header = () => {
         </S.ProfileBlock>
       ) : (
         <S.ButtonBlock>
-          <Button
-            onClick={() => navigate("/login")}
-            buttonStyle="transparent"
-            textSize="base"
-          >
-            로그인
-          </Button>
-          <Button
-            onClick={() => navigate("/signup")}
-            buttonStyle="primary"
-            textSize="base"
-          >
-            회원가입
-          </Button>
+          <Link to="/login">
+            <Button buttonStyle="transparent" textSize="base">
+              로그인
+            </Button>
+          </Link>
+          <Link to="/signup">
+            <Button buttonStyle="primary" textSize="base">
+              회원가입
+            </Button>
+          </Link>
         </S.ButtonBlock>
       )}
     </S.HeaderContainer>

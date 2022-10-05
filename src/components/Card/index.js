@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import * as S from "./styles";
 
-const Card = ({ data, cardStyle = "default" }) => {
+const Card = ({ data, cardStyle }) => {
   const navigate = useNavigate();
   const { id, category, location, title } = data;
-  const handleClick = () => {
+
+  const handleClick = useCallback(() => {
     navigate(`/content/${id}`);
-  };
+  }, [id, navigate]);
+
   return (
     <S.Container onClick={handleClick} cardStyle={cardStyle}>
       <S.Detail>

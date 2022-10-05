@@ -21,6 +21,10 @@ export default function MyPage() {
     dispatch(getMyCommentsThunk(loginData.user.email));
   }, [dispatch, loginData.user.email]);
 
+  useEffect(() => {
+    console.log(loginData.user.joined);
+  }, [loginData]);
+
   return (
     <S.MyPageContainer>
       <S.ProfileBlock>

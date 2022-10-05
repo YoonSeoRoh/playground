@@ -1,18 +1,20 @@
 import styled, { css } from "styled-components";
 
 const cardStyle = css`
-  ${(props) =>
-    props.cardStyle === "default" &&
-    css`
-      border-radius: 6px;
-      box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
-    `}
-  ${(props) =>
-    props.cardStyle === "mypage" &&
-    css`
-      border: 1px solid ${({ theme }) => theme.colors.lighterGray};
-      justify-content: center;
-    `}
+  ${({ cardStyle }) => {
+    switch (cardStyle) {
+      case "mypage":
+        return css`
+          border: 1px solid ${({ theme }) => theme.colors.lighterGray};
+          justify-content: center;
+        `;
+      default:
+        return css`
+          border-radius: 6px;
+          box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+        `;
+    }
+  }}
 `;
 
 export const Container = styled.div`

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -14,7 +14,7 @@ import ModalAlert from "../../components/ModalAlert";
 
 import * as S from "./styles";
 
-const Login = () => {
+export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -37,13 +37,17 @@ const Login = () => {
     setValue(name, value, { shouldValidate: true });
   };
 
-  const handleLogin = () => {
-    //api 연결
+  const handleLogin = useCallback(() => {
     dispatch(
       loginThunk({ email: getValues("email"), password: getValues("password") })
     );
     reset();
-  };
+  }, [dispatch, getValues, reset]);
+
+  const handleModal = useCallback(() => {
+    setModal(!modal);
+    navigate("/login");
+  }, [modal, navigate]);
 
   useEffect(() => {
     if (loginDone) {
@@ -89,13 +93,11 @@ const Login = () => {
             </Button>
           </S.ButtonBlock>
           <S.ButtonBlock>
-            <Button
-              onClick={() => navigate("/signup")}
-              buttonStyle="transparent"
-              textSize="large"
-            >
-              회원가입
-            </Button>
+            <Link to="/signup">
+              <Button buttonStyle="transparent" textSize="large">
+                회원가입
+              </Button>
+            </Link>
           </S.ButtonBlock>
         </S.ButtonContainer>
       </S.Form>
@@ -103,13 +105,8 @@ const Login = () => {
         isOpen={modal}
         title={msg}
         buttonTitle="확인"
-        onClick={() => {
-          setModal(!modal);
-          navigate("/login");
-        }}
+        onClick={handleModal}
       />
     </S.LoginContainer>
   );
-};
-
-export default React.memo(Login);
+}

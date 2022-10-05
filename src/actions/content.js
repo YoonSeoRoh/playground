@@ -39,33 +39,40 @@ export const deleteContentThunk = createAsyncThunk(
   }
 );
 
-export const addJoinThunk = createAsyncThunk(
-  "ADD_JOIN",
-  async (id, formData) => {
-    const response = await fetch(`http://localhost:4444/mainContent/${id}`, {
+export const addJoinThunk = createAsyncThunk("ADD_JOIN", async (formData) => {
+  const response = await fetch(
+    `http://localhost:4444/mainContent/${formData.id}`,
+    {
       method: "PATCH",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
-    });
-    const data = await response.json();
-    return data;
-  }
-);
+      body: JSON.stringify({
+        joined: formData.joined,
+      }),
+    }
+  );
+  const data = await response.json();
+  return data;
+});
 
 export const deleteJoinThunk = createAsyncThunk(
   "DELETE_JOIN",
-  async (id, formData) => {
-    const response = await fetch(`http://localhost:4444/mainContent/${id}`, {
-      method: "PATCH",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+  async (formData) => {
+    const response = await fetch(
+      `http://localhost:4444/mainContent/${formData.id}`,
+      {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          joined: formData.joined,
+        }),
+      }
+    );
     const data = await response.json();
     return data;
   }
@@ -104,6 +111,27 @@ export const deleteCommentThunk = createAsyncThunk(
     const response = await fetch(`http://localhost:4444/comment/${id}`, {
       method: "DELETE",
     });
+    const data = await response.json();
+    return data;
+  }
+);
+
+export const editCommentThunk = createAsyncThunk(
+  "EDIT_COMMENT",
+  async (formData) => {
+    const response = await fetch(
+      `http://localhost:4444/comment/${formData.id}`,
+      {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          comment: formData.comment,
+        }),
+      }
+    );
     const data = await response.json();
     return data;
   }

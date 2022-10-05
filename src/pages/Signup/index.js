@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -14,7 +14,7 @@ import ModalAlert from "../../components/ModalAlert";
 
 import * as S from "./styles";
 
-const Signup = () => {
+export default function Signup() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -37,8 +37,7 @@ const Signup = () => {
     setValue(name, value, { shouldValidate: true });
   };
 
-  const handleSignup = () => {
-    //api 연결
+  const handleSignup = useCallback(() => {
     dispatch(
       signupThunk({
         nickname: getValues("nickname"),
@@ -47,7 +46,12 @@ const Signup = () => {
       })
     );
     reset();
-  };
+  }, [dispatch, getValues, reset]);
+
+  const handleModal = useCallback(() => {
+    setModal(!modal);
+    navigate("/login");
+  }, [modal, navigate]);
 
   useEffect(() => {
     if (signupData) {
@@ -105,13 +109,11 @@ const Signup = () => {
             </Button>
           </S.ButtonBlock>
           <S.ButtonBlock>
-            <Button
-              onClick={() => navigate("/login")}
-              buttonStyle="transparent"
-              textSize="large"
-            >
-              로그인
-            </Button>
+            <Link to="/login">
+              <Button buttonStyle="transparent" textSize="large">
+                로그인
+              </Button>
+            </Link>
           </S.ButtonBlock>
         </S.ButtonContainer>
       </S.Form>
@@ -119,13 +121,8 @@ const Signup = () => {
         isOpen={modal}
         title={msg}
         buttonTitle="로그인하기"
-        onClick={() => {
-          setModal(!modal);
-          navigate("/login");
-        }}
+        onClick={handleModal}
       />
     </S.SignupContainer>
   );
-};
-
-export default React.memo(Signup);
+}

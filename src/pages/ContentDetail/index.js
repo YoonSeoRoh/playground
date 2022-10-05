@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -49,13 +49,12 @@ const ContentDetail = () => {
     setValue(name, value, { shouldValidate: true });
   };
 
-  const handleWrite = () => {
+  const handleWrite = useCallback(() => {
+    let message = "";
     if (!loginData) {
-      setModal(true);
-      setMsg("로그인이 필요합니다.");
+      message = "로그인이 필요합니다.";
     } else if (!isValid) {
-      setModal(true);
-      setMsg("댓글을 입력해주세요.");
+      message = "댓글을 입력해주세요.";
     } else {
       dispatch(
         addCommentThunk({
@@ -65,16 +64,29 @@ const ContentDetail = () => {
           comment: getValues("comment"),
         })
       );
-      setModal(true);
-      setMsg("등록되었습니다.");
+      message = "등록되었습니다.";
     }
+    setModal(true);
+    setMsg(message);
     reset();
-  };
+  }, [dispatch, getValues, isValid, loginData, paramsId, reset]);
+
+  const handleModal = useCallback(() => {
+    setModal(!modal);
+    navigate("/");
+  }, [modal, navigate]);
 
   useEffect(() => {
     dispatch(getContentThunk(parseInt(paramsId)));
     dispatch(getCommentsThunk(parseInt(paramsId)));
   }, [dispatch, paramsId]);
+
+  useEffect(() => {
+    if (contentData && Object.keys(contentData).length === 0) {
+      setModal(true);
+      setMsg("존재하지 않는 게시물입니다.");
+    }
+  }, [contentData]);
 
   return (
     <>
@@ -106,10 +118,7 @@ const ContentDetail = () => {
         isOpen={modal}
         title={msg}
         buttonTitle="확인"
-        onClick={() => {
-          setModal(!modal);
-          navigate("/");
-        }}
+        onClick={handleModal}
       />
     </>
   );

@@ -1,3 +1,8 @@
+const size = {
+  laptop: "1460px",
+  desktop: "1700px",
+};
+
 const colors = {
   primary: "#2bed96",
   lightBlack: "#212529",
@@ -31,4 +36,6 @@ export const theme = {
   colors,
   fontSizes,
   fontWeights,
+  laptop: `(min-width: ${size.laptop})`,
+  desktop: `(min-width: ${size.desktop})`,
 };
