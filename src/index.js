@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { store } from "./store/configureStore";
 import { Router } from "./Router";
 import { ThemeProvider } from "styled-components";
-import { GlobalStyle } from "./styles/GlobalStyle";
+import { GlobalStyle, ComponentContainer } from "./styles/GlobalStyle";
 import { theme } from "./styles/Theme";
 
 const container = document.getElementById("root");
@@ -14,7 +14,9 @@ root.render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <Router />
+      <ComponentContainer>
+        <Router />
+      </ComponentContainer>
     </ThemeProvider>
   </Provider>
 );

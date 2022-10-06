@@ -1,8 +1,46 @@
 import styled from "styled-components";
 
 export const Container = styled.section`
-  padding: 150px 20px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap 10px 10px;
+  width: 100%;
+  padding: 80px 20px 20px 20px;
+`;
+
+export const IntroBlock = styled.div`
+  position: relative;
+  padding: 30px;
+`;
+
+export const Title = styled.div`
+  position: absolute;
+  text-align: right;
+  top: 30%;
+  left: 45%;
+  h1 {
+    color: ${({ theme }) => theme.colors.lightGray};
+    font-size: ${({ theme }) => theme.fontSizes.icon};
+    font-weight: ${({ theme }) => theme.fontWeights.icon};
+  }
+  span {
+    color: ${({ theme }) => theme.colors.primary};
+  }
+  p {
+    padding-top: 10px;
+    color: ${({ theme }) => theme.colors.lightBlack};
+    font-size: ${({ theme }) => theme.fontSizes.base};
+    font-weight: ${({ theme }) => theme.fontWeights.sm};
+  }
+`;
+
+export const Category = styled.div`
+  text-align: center;
+  padding: 30px 0 20px 0;
+  color: ${({ theme }) => theme.colors.gray};
+  font-size: ${({ theme }) => theme.fontSizes.base};
+  font-weight: ${({ theme }) => theme.fontWeights.sm};
+`;
+
+export const MainBlock = styled.div`
+display: grid;
+grid-template-columns: 1fr 1fr 1fr 1fr;
+gap 10px 10px;
 `;

@@ -64,7 +64,7 @@ export default function WriteContent() {
           location: city,
           title: getValues("title"),
           content: getValues("content"),
-          join: getValues("join"),
+          join: parseInt(getValues("join")),
           joined: 0,
         })
       );

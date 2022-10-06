@@ -8,27 +8,18 @@ import {
   addJoinThunk,
   deleteJoinThunk,
 } from "../../actions/content";
-import Example from "../../assets/example.jpg";
+import { editJoinedThunk } from "../../actions/user";
 
 import Button from "../../components/Button";
 import ModalAlert from "../../components/ModalAlert";
 
 import * as S from "./styles";
+import Example from "../../assets/example.jpg";
 
 const Content = ({ data, paramsId }) => {
-  console.log("컨텐츠 렌더링");
   const dispatch = useDispatch();
-  const {
-    id,
-    category,
-    title,
-    join,
-    joined,
-    nickname,
-    location,
-    content,
-    email,
-  } = data;
+  const { category, title, join, joined, nickname, location, content, email } =
+    data;
   const { loginData } = useSelector((state) => state.user);
 
   const [modal, setModal] = useState(false);
@@ -37,12 +28,36 @@ const Content = ({ data, paramsId }) => {
 
   const userEmail = loginData?.user.email;
 
+  const handleJoinList = useCallback(
+    (index, type) => {
+      let list = [];
+      if (type === "DELETE") {
+        console.log(list);
+        list = loginData.user.joined.filter((i) => i !== index);
+        console.log(list);
+      }
+      if (type === "PUT") {
+        list = loginData.user.joined.push(index);
+      }
+      return list;
+    },
+    [loginData]
+  );
+
   const handleJoin = useCallback(() => {
+    let list = [];
     let message = "";
     if (!loginData) {
       message = "로그인이 필요합니다.";
     } else if (email !== userEmail) {
       if (userJoin) {
+        list = handleJoinList(paramsId, "DELETE");
+        dispatch(
+          editJoinedThunk({
+            id: loginData.user.id,
+            joined: list,
+          })
+        );
         dispatch(
           deleteJoinThunk({ id: paramsId, joined: parseInt(joined) - 1 })
         );
@@ -53,19 +68,69 @@ const Content = ({ data, paramsId }) => {
       ) {
         message = "인원 초과입니다.";
       } else {
+        list = handleJoinList(paramsId, "PUT");
+        dispatch(
+          editJoinedThunk({
+            id: loginData.user.id,
+            joined: list,
+          })
+        );
         dispatch(addJoinThunk({ id: paramsId, joined: parseInt(joined) + 1 }));
         message = "참여 신청이 완료되었습니다.";
       }
     }
     setModal(true);
     setMsg(message);
-  }, [dispatch, email, join, joined, loginData, paramsId, userEmail, userJoin]);
+  }, [
+    dispatch,
+    email,
+    handleJoinList,
+    join,
+    joined,
+    loginData,
+    paramsId,
+    userEmail,
+    userJoin,
+  ]);
 
   const handleDelete = useCallback(() => {
     dispatch(deleteContentThunk(paramsId));
     setModal(true);
     setMsg("삭제되었습니다.");
   }, [dispatch, paramsId]);
+
+  const handleShare = useCallback(() => {
+    let shareLink = `http://localhost:3000/content/${paramsId}`;
+    if (window.Kakao) {
+      const kakao = window.Kakao;
+      if (!kakao.isInitialized()) {
+        kakao.init(process.env.REACT_APP_KAKAO_KEY);
+      }
+      kakao.Link.sendDefault({
+        objectType: "feed",
+        content: {
+          title: "PLAYGROUND",
+          description: "모임을 찾아보세요!",
+          imageUrl: "",
+          link: {
+            webUrl: shareLink,
+          },
+        },
+        buttons: [
+          {
+            title: "모임 보기",
+            link: {
+              webUrl: shareLink,
+            },
+          },
+        ],
+      });
+    }
+  }, [paramsId]);
+
+  const handleModal = useCallback(() => {
+    setModal(!modal);
+  }, [modal]);
 
   useEffect(() => {
     if (loginData) {
@@ -97,7 +162,7 @@ const Content = ({ data, paramsId }) => {
             </S.FlexWrapper>
           </S.DetailWrapper>
           <S.FlexWrapper>
-            <S.IconWrapper>
+            <S.IconWrapper onClick={handleShare}>
               <FontAwesomeIcon icon={faShareSquare} />
             </S.IconWrapper>
             {email === userEmail ? (
@@ -128,9 +193,7 @@ const Content = ({ data, paramsId }) => {
         isOpen={modal}
         title={msg}
         buttonTitle="확인"
-        onClick={() => {
-          setModal(!modal);
-        }}
+        onClick={handleModal}
       />
     </>
   );

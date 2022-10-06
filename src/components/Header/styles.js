@@ -23,7 +23,6 @@ export const Title = styled.div`
 
 export const ButtonBlock = styled.div`
   display: flex;
-  width: 15%;
 `;
 
 export const ProfileBlock = styled.div`

@@ -61,68 +61,72 @@ export default function Signup() {
   }, [navigate, signupData]);
 
   return (
-    <S.SignupContainer>
-      <S.Title>회원가입</S.Title>
-      <S.Form>
-        <S.Label>닉네임</S.Label>
-        <Input
-          type="email"
-          placeholder="닉네임을 입력하세요."
-          {...register("nickname")}
-          onChange={handleChange}
-        />
-        <ValidationMessage>{errors.nickname?.message}</ValidationMessage>
-        <S.Label>이메일</S.Label>
-        <Input
-          type="email"
-          placeholder="이메일을 입력하세요."
-          {...register("email")}
-          onChange={handleChange}
-        />
-        <ValidationMessage>{errors.email?.message}</ValidationMessage>
-        <S.Label>비밀번호</S.Label>
-        <Input
-          type="password"
-          placeholder="비밀번호를 입력하세요."
-          {...register("password")}
-          onChange={handleChange}
-        />
-        <ValidationMessage>{errors.password?.message}</ValidationMessage>
-        <S.Label>비밀번호 확인</S.Label>
-        <Input
-          type="password"
-          placeholder="비밀번호를 다시 입력하세요."
-          {...register("passwordConfirm")}
-          onChange={handleChange}
-        />
-        <ValidationMessage>{errors.passwordConfirm?.message}</ValidationMessage>
-        <S.ButtonContainer>
-          <S.ButtonBlock>
-            <Button
-              type="submit"
-              buttonStyle="primary"
-              textSize="large"
-              disabled={!isValid}
-              onClick={handleSignup}
-            >
-              회원가입
-            </Button>
-          </S.ButtonBlock>
-          <S.ButtonBlock>
-            <Link to="/login">
-              <Button buttonStyle="transparent" textSize="large">
-                로그인
+    <>
+      <S.SignupContainer>
+        <S.Title>회원가입</S.Title>
+        <S.Form>
+          <S.Label>닉네임</S.Label>
+          <Input
+            type="email"
+            placeholder="닉네임을 입력하세요."
+            {...register("nickname")}
+            onChange={handleChange}
+          />
+          <ValidationMessage>{errors.nickname?.message}</ValidationMessage>
+          <S.Label>이메일</S.Label>
+          <Input
+            type="email"
+            placeholder="이메일을 입력하세요."
+            {...register("email")}
+            onChange={handleChange}
+          />
+          <ValidationMessage>{errors.email?.message}</ValidationMessage>
+          <S.Label>비밀번호</S.Label>
+          <Input
+            type="password"
+            placeholder="비밀번호를 입력하세요."
+            {...register("password")}
+            onChange={handleChange}
+          />
+          <ValidationMessage>{errors.password?.message}</ValidationMessage>
+          <S.Label>비밀번호 확인</S.Label>
+          <Input
+            type="password"
+            placeholder="비밀번호를 다시 입력하세요."
+            {...register("passwordConfirm")}
+            onChange={handleChange}
+          />
+          <ValidationMessage>
+            {errors.passwordConfirm?.message}
+          </ValidationMessage>
+          <S.ButtonContainer>
+            <S.ButtonBlock>
+              <Button
+                type="submit"
+                buttonStyle="primary"
+                textSize="large"
+                disabled={!isValid}
+                onClick={handleSignup}
+              >
+                회원가입
               </Button>
-            </Link>
-          </S.ButtonBlock>
-        </S.ButtonContainer>
-      </S.Form>
+            </S.ButtonBlock>
+            <S.ButtonBlock>
+              <Link to="/login">
+                <Button buttonStyle="transparent" textSize="large">
+                  로그인
+                </Button>
+              </Link>
+            </S.ButtonBlock>
+          </S.ButtonContainer>
+        </S.Form>
+      </S.SignupContainer>
       <ModalAlert
         isOpen={modal}
         title={msg}
         buttonTitle="로그인하기"
         onClick={handleModal}
       />
-    </S.SignupContainer>
+    </>
   );
 }

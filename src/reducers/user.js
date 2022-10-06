@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
 import {
   loginThunk,
   signupThunk,
   getMyCommentsThunk,
   getMyContentsThunk,
+  editJoinedThunk,
 } from "../actions/user";
 
 const initialState = {
@@ -19,6 +21,9 @@ const initialState = {
   contentData: [],
   contentLoading: false,
   contentDone: false,
+  editJoined: null,
+  editJoinedLoading: false,
+  editJoinedDone: false,
 };
 
 export const userSlice = createSlice({

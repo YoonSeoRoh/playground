@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getContentsThunk } from "../../actions/content";
 
+import Slide from "../../components/Slide";
 import Card from "../../components/Card";
 import NoContent from "../../components/NoContent";
 import Loading from "../../components/Loading";
@@ -23,17 +24,33 @@ export default function Main() {
   });
 
   return (
-    <>
-      {contentsData && contentsData.length !== 0 ? (
-        <S.Container>
-          {contentsData?.map((item, index) => (
-            <Card key={index} data={item} />
-          ))}
-        </S.Container>
-      ) : (
-        <NoContent />
-      )}
-      {contentsLoading && <Loading />}
-    </>
+    <S.Container>
+      <S.IntroBlock>
+        <Slide />
+        <S.Title>
+          <h1>
+            FIND YOUR <span>PLAYGROUND</span>
+          </h1>
+          <p>다양한 사람들과 함께 경험해보세요.</p>
+        </S.Title>
+      </S.IntroBlock>
+      <>
+        <S.Category>모임 찾기</S.Category>
+        {contentsData && contentsData.length !== 0 ? (
+          <S.MainBlock>
+            {contentsData?.map((item, index) => (
+              <Card key={index} data={item} />
+            ))}
+          </S.MainBlock>
+        ) : (
+          <NoContent
+            title="등록된 모임이 없습니다."
+            titleSize="large"
+            iconSize="large"
+          />
+        )}
+        {contentsLoading && <Loading />}
+      </>
+    </S.Container>
   );
 }

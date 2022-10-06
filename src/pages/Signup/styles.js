@@ -27,7 +27,7 @@ export const Form = styled.form`
   flex-direction: column;
   width: 42%;
   margin: 0 auto;
-  padding-top: 20px;
+  padding-top: 15px;
 `;
 
 export const ButtonContainer = styled.div`

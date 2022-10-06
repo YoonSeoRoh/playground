@@ -18,8 +18,8 @@ const cardStyle = css`
 `;
 
 export const Container = styled.div`
+  overflow: hidden;
   width: 100%;
-  height: 100px;
   padding: 10px;
 
   display: flex;

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import * as S from "./styles";
 
 const DropDownMenu = (props) => {
-  console.log("드롭메뉴 렌더링");
   const [data, setData] = useState("");
 
   const handleDataChange = (e) => {

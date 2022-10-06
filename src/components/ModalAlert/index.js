@@ -28,7 +28,6 @@ const customStyles = {
 };
 
 const ModalAlert = ({ isOpen, title, buttonTitle, onClick }) => {
-  console.log("모달 렌더링 됨");
   return (
     <Modal isOpen={isOpen} style={customStyles} ariaHideApp={false}>
       <S.Title>{title}</S.Title>

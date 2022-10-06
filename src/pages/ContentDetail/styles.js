@@ -5,7 +5,7 @@ export const Container = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 80px 0 50px 0;
+  padding: 80px 0 20px 0;
 `;
 
 export const WriteBlock = styled.div`

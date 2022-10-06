@@ -64,6 +64,7 @@ const textSize = css`
 
 export const StyledButton = styled.button`
   width: 100%;
+  height: 100%;
   text-align: center;
   padding: 10px;
   ${buttonStyle}

@@ -1,10 +1,16 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFolderOpen } from "@fortawesome/free-regular-svg-icons";
+
 import * as S from "./styles";
 
-const NoContent = () => {
+const NoContent = ({ title, titleSize, iconSize }) => {
   return (
     <S.Container>
-      <S.Title>등록된 글이 없습니다.</S.Title>
+      <S.Title titleSize={titleSize}>{title}</S.Title>
+      <S.IconWrapper iconSize={iconSize}>
+        <FontAwesomeIcon icon={faFolderOpen} />
+      </S.IconWrapper>
     </S.Container>
   );
 };

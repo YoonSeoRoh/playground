@@ -7,6 +7,7 @@ import { getMyContentsThunk, getMyCommentsThunk } from "../../actions/user";
 
 import Comment from "../../components/Comment";
 import Card from "../../components/Card";
+import NoContent from "../../components/NoContent";
 
 import * as S from "./styles";
 
@@ -21,10 +22,6 @@ export default function MyPage() {
     dispatch(getMyCommentsThunk(loginData.user.email));
   }, [dispatch, loginData.user.email]);
 
-  useEffect(() => {
-    console.log(loginData.user.joined);
-  }, [loginData]);
-
   return (
     <S.MyPageContainer>
       <S.ProfileBlock>
@@ -36,15 +33,31 @@ export default function MyPage() {
       </S.ProfileBlock>
       <S.Title>내가 남긴 댓글</S.Title>
       <S.Block>
-        {commentData?.map((item) => (
-          <Comment key={item.id} data={item} />
-        ))}
+        {commentData.length !== 0 ? (
+          commentData?.map((item) => <Comment key={item.id} data={item} />)
+        ) : (
+          <NoContent title="댓글이 없습니다." />
+        )}
       </S.Block>
       <S.Title>내가 주최한 모임</S.Title>
       <S.Block>
-        {contentData?.map((item) => (
-          <Card key={item.id} data={item} cardStyle="mypage" />
-        ))}
+        {contentData.length !== 0 ? (
+          contentData?.map((item) => (
+            <Card key={item.id} data={item} cardStyle="mypage" />
+          ))
+        ) : (
+          <NoContent title="모임이 없습니다." />
+        )}
+      </S.Block>
+      <S.Title>내가 참여한 모임</S.Title>
+      <S.Block>
+        {contentData.length !== 0 ? (
+          contentData?.map((item) => (
+            <Card key={item.id} data={item} cardStyle="mypage" />
+          ))
+        ) : (
+          <NoContent title="모임이 없습니다." />
+        )}
       </S.Block>
     </S.MyPageContainer>
   );

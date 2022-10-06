@@ -1,6 +1,6 @@
 const size = {
-  laptop: "1460px",
-  desktop: "1700px",
+  tablet: "768px",
+  desktop: "1024px",
 };
 
 const colors = {
@@ -20,7 +20,7 @@ const fontSizes = {
   base: "16px",
   lg: "18px",
   xl: "20px",
-  title: "24px",
+  title: "22px",
   icon: "50px",
 };
 
@@ -36,6 +36,6 @@ export const theme = {
   colors,
   fontSizes,
   fontWeights,
-  laptop: `(min-width: ${size.laptop})`,
+  tablet: `(min-width: ${size.tablet})`,
   desktop: `(min-width: ${size.desktop})`,
 };

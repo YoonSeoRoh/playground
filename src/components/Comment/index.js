@@ -12,7 +12,6 @@ import ModalAlert from "../ModalAlert";
 import * as S from "./styles";
 
 const Comment = ({ data }) => {
-  console.log("코멘트 렌더링");
   const dispatch = useDispatch();
   const { id, email, nickname, comment } = data;
   const { loginData } = useSelector((state) => state.user);
