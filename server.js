@@ -4,10 +4,15 @@ const cors = require("cors");
 const server = jsonServer.create();
 const router = jsonServer.router("db.json");
 
+const middlewares = jsonServer.defaults({
+  static: "./build",
+});
+
 server.db = router.db;
 
 server.use(auth);
 server.use(router);
+server.use(middlewares);
 
 server.use(
   jsonServer.rewriter({
