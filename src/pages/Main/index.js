@@ -23,32 +23,36 @@ export default function Main() {
 
   return (
     <S.Container>
-      <S.IntroBlock>
-        <Slide />
-        <S.Title>
-          <h1>
-            FIND YOUR <span>PLAYGROUND</span>
-          </h1>
-          <p>다양한 사람들과 함께 경험해보세요.</p>
-        </S.Title>
-      </S.IntroBlock>
-      <>
-        {contentsLoading ? (
-          <Loading />
-        ) : contentsData && contentsData.length !== 0 ? (
-          <S.MainBlock>
-            {contentsData?.map((item, index) => (
-              <Card key={index} data={item} />
-            ))}
-          </S.MainBlock>
-        ) : (
-          <NoContent
-            title="등록된 모임이 없습니다."
-            titleSize="large"
-            iconSize="large"
-          />
-        )}
-      </>
+      {contentsLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <S.IntroBlock>
+            <Slide />
+            <S.Title>
+              <h1>
+                FIND YOUR <span>PLAYGROUND</span>
+              </h1>
+              <p>다양한 사람들과 함께 경험해보세요.</p>
+            </S.Title>
+          </S.IntroBlock>
+          <>
+            {contentsData && contentsData.length !== 0 ? (
+              <S.MainBlock>
+                {contentsData?.map((item, index) => (
+                  <Card key={index} data={item} />
+                ))}
+              </S.MainBlock>
+            ) : (
+              <NoContent
+                title="등록된 모임이 없습니다."
+                titleSize="large"
+                iconSize="large"
+              />
+            )}
+          </>
+        </>
+      )}
     </S.Container>
   );
 }
