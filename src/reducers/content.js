@@ -3,6 +3,7 @@ import {
   getContentsThunk,
   getContentThunk,
   addContentThunk,
+  editContentThunk,
   deleteContentThunk,
   getCommentsThunk,
   addCommentThunk,
@@ -11,6 +12,7 @@ import {
 } from "../actions/content";
 
 const initialState = {
+  editingContent: false,
   contentsData: [],
   contentsLoading: false,
   contentsDone: false,
@@ -20,6 +22,9 @@ const initialState = {
   addContent: null,
   addContentLoading: false,
   addContentDone: false,
+  editContent: null,
+  editContentLoading: false,
+  editContentDone: false,
   deleteContent: null,
   deleteContentLoading: false,
   deleteContentDone: false,
@@ -40,7 +45,16 @@ const initialState = {
 export const contentSlice = createSlice({
   name: "content",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    editContent: (state, action) => {
+      state.editingContent = action.payload;
+    },
+    editCommentRevert: (state) => {
+      state.editComment = null;
+      state.editCommentLoading = false;
+      state.editCommentDone = false;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getContentsThunk.pending, (state, action) => {
@@ -69,6 +83,15 @@ export const contentSlice = createSlice({
         state.addContentLoading = false;
         state.addContentDone = true;
         state.addContentData = action.payload;
+      })
+      .addCase(editContentThunk.pending, (state, action) => {
+        state.editContentLoading = true;
+        state.editContentDone = false;
+      })
+      .addCase(editContentThunk.fulfilled, (state, action) => {
+        state.editContentLoading = false;
+        state.editContentDone = true;
+        state.editContentData = action.payload;
       })
       .addCase(deleteContentThunk.pending, (state, action) => {
         state.deleteContentLoading = true;
@@ -117,5 +140,7 @@ export const contentSlice = createSlice({
       });
   },
 });
+
+export const { editContent, editCommentRevert } = contentSlice.actions;
 
 export default contentSlice.reducer;

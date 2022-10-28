@@ -17,11 +17,15 @@ export default function Main() {
     (state) => state.content
   );
 
+  // useEffect(() => {
+  //   if (!contentsDone) {
+  //     dispatch(getContentsThunk());
+  //   }
+  // }, );
+
   useEffect(() => {
-    if (!contentsDone) {
-      dispatch(getContentsThunk());
-    }
-  });
+    dispatch(getContentsThunk());
+  }, [dispatch]);
 
   return (
     <S.Container>

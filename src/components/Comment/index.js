@@ -1,9 +1,11 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 
 import { deleteCommentThunk } from "../../actions/content";
+import { editCommentRevert } from "../../reducers/content";
 
 import Button from "../Button";
 import ModalComment from "../ModalComment";
@@ -13,8 +15,11 @@ import * as S from "./styles";
 
 const Comment = ({ data }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { id, email, nickname, comment } = data;
   const { loginData } = useSelector((state) => state.user);
+  const { editCommentDone } = useSelector((state) => state.content);
 
   const [modal, setModal] = useState(false);
   const [msg, setMsg] = useState("");
@@ -34,6 +39,14 @@ const Comment = ({ data }) => {
     setMsg("삭제되었습니다.");
   }, [dispatch, id]);
 
+  useEffect(() => {
+    if (editCommentDone) {
+      setBlock(!block);
+      dispatch(editCommentRevert());
+      navigate("/");
+    }
+  }, [block, dispatch, editCommentDone, navigate]);
+
   return (
     <S.CommentContainer>
       <S.Icon>
@@ -51,11 +64,11 @@ const Comment = ({ data }) => {
               buttonStyle="edit"
               textSize="sm"
             >
-              수정하기
+              수정
             </Button>
           </S.EditButtonWrapper>
           <S.DeleteButtonWrapper>
-            <Button onClick={handleDelete}>삭제하기</Button>
+            <Button onClick={handleDelete}>삭제</Button>
           </S.DeleteButtonWrapper>
         </>
       )}

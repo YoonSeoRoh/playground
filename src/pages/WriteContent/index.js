@@ -7,7 +7,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { tabList } from "../../libs/data/tabList";
 import { cityList } from "../../libs/data/cityList";
 import { writeValidation } from "../../libs/validations/writeValidation";
-import { getContentThunk, addContentThunk } from "../../actions/content";
+import {
+  getContentThunk,
+  addContentThunk,
+  editContentThunk,
+} from "../../actions/content";
+import { editContent } from "../../reducers/content";
 
 import DropDownMenu from "../../components/DropDownMenu";
 import Input from "../../components/Input";
@@ -25,7 +30,13 @@ export default function WriteContent() {
   const dispatch = useDispatch();
 
   const { loginData } = useSelector((state) => state.user);
-  const { contentData, addContent } = useSelector((state) => state.content);
+  const {
+    contentData,
+    addContent,
+    addContentDone,
+    editingContent,
+    editContentDone,
+  } = useSelector((state) => state.content);
 
   const [modal, setModal] = useState(false);
   const [msg, setMsg] = useState("");
@@ -56,25 +67,80 @@ export default function WriteContent() {
   };
 
   const handleSubmit = useCallback(() => {
-    if (!isValid) {
-      setModal(true);
-      setMsg("제목 및 내용을 입력해주세요.");
+    if (loginData?.user) {
+      if (!isValid) {
+        setModal(true);
+        setMsg("제목 및 내용을 입력해주세요.");
+      } else {
+        dispatch(
+          addContentThunk({
+            category: category,
+            email: loginData.user.email,
+            nickname: loginData.user.nickname,
+            location: city,
+            title: getValues("title"),
+            content: getValues("content"),
+            join: parseInt(getValues("join")),
+            joined: 0,
+          })
+        );
+      }
     } else {
-      dispatch(
-        addContentThunk({
-          category: category,
-          email: loginData.user.email,
-          nickname: loginData.user.nickname,
-          location: city,
-          title: getValues("title"),
-          content: getValues("content"),
-          join: parseInt(getValues("join")),
-          joined: 0,
-        })
-      );
+      setModal(true);
+      setMsg("작성이 불가능합니다.");
+      navigate("/");
     }
     reset();
-  }, [category, city, dispatch, getValues, isValid, loginData, reset]);
+  }, [
+    isValid,
+    reset,
+    loginData,
+    dispatch,
+    category,
+    city,
+    getValues,
+    navigate,
+  ]);
+
+  const handleEdit = useCallback(() => {
+    if (loginData?.user && editingContent) {
+      dispatch(
+        editContentThunk({
+          id: paramsId,
+          data: {
+            category: category,
+            email: loginData.user.email,
+            nickname: loginData.user.nickname,
+            location: city,
+            title: getValues("title"),
+            content: getValues("content"),
+            join: parseInt(getValues("join")),
+            joined: 0,
+          },
+        })
+      );
+      dispatch(editContent(false));
+      if (editContentDone) {
+        navigate(`/content/${paramsId}`, { replace: true });
+      }
+    } else {
+      setModal(true);
+      setMsg("수정이 불가능합니다.");
+      navigate("/");
+    }
+    reset();
+  }, [
+    category,
+    city,
+    dispatch,
+    editContentDone,
+    editingContent,
+    getValues,
+    loginData,
+    navigate,
+    paramsId,
+    reset,
+  ]);
 
   const handleModal = useCallback(() => {
     setModal(!modal);
@@ -82,16 +148,10 @@ export default function WriteContent() {
   }, [modal, navigate]);
 
   useEffect(() => {
-    if (paramsId) {
+    if (paramsId && editingContent) {
       dispatch(getContentThunk(parseInt(paramsId)));
     }
-  }, [contentData, dispatch, paramsId]);
-
-  // useEffect(() => {
-  //   if (!loginData) {
-  //     navigate("/");
-  //   }
-  // });
+  }, [contentData, dispatch, editingContent, paramsId]);
 
   useEffect(() => {
     if (addContent) {
@@ -104,17 +164,17 @@ export default function WriteContent() {
       <DropDownMenu
         data={tabList}
         getData={getCategory}
-        defaultValue={contentData && contentData.category}
+        defaultValue={editingContent && contentData.category}
       />
       <DropDownMenu
         data={cityList}
         getData={getCity}
-        defaultValue={contentData && contentData.location}
+        defaultValue={editingContent ? contentData.location : ""}
       />
       <form>
         <S.Label>모집 인원</S.Label>
         <Input
-          defaultValue={contentData && contentData.join}
+          defaultValue={editingContent ? contentData.join : ""}
           placeholder="모집 인원을 숫자로 입력하세요."
           inputStyle="border"
           {...register("join")}
@@ -122,7 +182,7 @@ export default function WriteContent() {
         />
         <S.Label>제목</S.Label>
         <Input
-          defaultValue={contentData && contentData.title}
+          defaultValue={editingContent ? contentData.title : ""}
           placeholder="제목을 입력하세요."
           inputStyle="border"
           {...register("title")}
@@ -130,7 +190,7 @@ export default function WriteContent() {
         />
         <S.Label>내용</S.Label>
         <ContentForm
-          defaultValue={contentData && contentData.content}
+          defaultValue={editingContent ? contentData.content : ""}
           placeholder="모임에 대한 소개를 해주세요.(목적, 일시 등)"
           {...register("content")}
           onChange={handleChange}
@@ -146,11 +206,11 @@ export default function WriteContent() {
           <S.ButtonBlock>
             <Button
               type="submit"
-              onClick={handleSubmit}
+              onClick={editingContent ? handleEdit : handleSubmit}
               buttonStyle="primary"
               textSize="large"
             >
-              {contentData ? "수정하기" : "모임 열기"}
+              {editingContent ? "수정하기" : "모임 열기"}
             </Button>
           </S.ButtonBlock>
         </S.ButtonContainer>

@@ -29,6 +29,22 @@ export const addContentThunk = createAsyncThunk(
   }
 );
 
+export const editContentThunk = createAsyncThunk(
+  "EDIT_CONTENT",
+  async (formData) => {
+    const response = await fetch(`${apiBaseUrl}/mainContent/${formData.id}`, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData.data),
+    });
+    const data = await response.json();
+    return data;
+  }
+);
+
 export const deleteContentThunk = createAsyncThunk(
   "DELETE_CONTENT",
   async (id) => {
@@ -114,19 +130,16 @@ export const deleteCommentThunk = createAsyncThunk(
 export const editCommentThunk = createAsyncThunk(
   "EDIT_COMMENT",
   async (formData) => {
-    const response = await fetch(
-      `http://localhost:4444/comment/${formData.id}`,
-      {
-        method: "PATCH",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          comment: formData.comment,
-        }),
-      }
-    );
+    const response = await fetch(`${apiBaseUrl}/comment/${formData.id}`, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        comment: formData.comment,
+      }),
+    });
     const data = await response.json();
     return data;
   }

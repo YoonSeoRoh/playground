@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { commentValidation } from "../../libs/validations/commentValidation";
+import { editContent } from "../../reducers/content";
 
 import {
   getContentThunk,
@@ -79,10 +80,11 @@ const ContentDetail = () => {
   }, [dispatch, getValues, isValid, loginData, paramsId, reset]);
 
   const handleEdit = useCallback(() => {
+    dispatch(editContent(true));
     navigate("/writecontent", {
       state: paramsId,
     });
-  }, [navigate, paramsId]);
+  }, [dispatch, navigate, paramsId]);
 
   const handleDelete = useCallback(() => {
     setMenu(!menu);
@@ -116,23 +118,25 @@ const ContentDetail = () => {
     <S.Container>
       {contentData && (
         <>
-          <S.MenuBlock>
-            <S.Menu>
-              <img src={More} alt="메뉴" onClick={handleMenu} />
-              <S.ModalWrpper>
-                <ModalDropDown menuShow={menu}>
-                  <S.MenuItem onClick={handleEdit}>
-                    수정하기
-                    <img src={Write} alt="수정" />
-                  </S.MenuItem>
-                  <S.MenuItem delete onClick={handleDelete}>
-                    삭제하기
-                    <img src={Delete} alt="삭제" />
-                  </S.MenuItem>
-                </ModalDropDown>
-              </S.ModalWrpper>
-            </S.Menu>
-          </S.MenuBlock>
+          {contentData?.email === loginData?.user.email && (
+            <S.MenuBlock>
+              <S.Menu>
+                <img src={More} alt="메뉴" onClick={handleMenu} />
+                <S.ModalWrpper>
+                  <ModalDropDown menuShow={menu}>
+                    <S.MenuItem onClick={handleEdit}>
+                      수정하기
+                      <img src={Write} alt="수정" />
+                    </S.MenuItem>
+                    <S.MenuItem delete onClick={handleDelete}>
+                      삭제하기
+                      <img src={Delete} alt="삭제" />
+                    </S.MenuItem>
+                  </ModalDropDown>
+                </S.ModalWrpper>
+              </S.Menu>
+            </S.MenuBlock>
+          )}
           <S.InnerContainer>
             <Content data={contentData} paramsId={paramsId} />
             <S.CommentBlock>

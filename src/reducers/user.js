@@ -31,6 +31,8 @@ export const userSlice = createSlice({
   initialState: initialState,
   reducers: {
     logout: (state) => {
+      state.loginData = null;
+      state.loginLoading = false;
       state.loginDone = false;
     },
   },

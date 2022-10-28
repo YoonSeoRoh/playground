@@ -17,7 +17,8 @@ const Header = () => {
 
   const handleLogout = useCallback(() => {
     dispatch(logout());
-    navigate("/");
+    navigate("/", { replace: true });
+    window.location.reload();
   }, [dispatch, navigate]);
 
   return (
