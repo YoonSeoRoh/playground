@@ -7,6 +7,7 @@ export const Container = styled.section`
 
 export const IntroBlock = styled.div`
   position: relative;
+  height: 100vh;
   padding: 30px;
 `;
 
@@ -29,14 +30,6 @@ export const Title = styled.div`
     font-size: ${({ theme }) => theme.fontSizes.base};
     font-weight: ${({ theme }) => theme.fontWeights.sm};
   }
-`;
-
-export const Category = styled.div`
-  text-align: center;
-  padding: 30px 0 20px 0;
-  color: ${({ theme }) => theme.colors.gray};
-  font-size: ${({ theme }) => theme.fontSizes.base};
-  font-weight: ${({ theme }) => theme.fontWeights.sm};
 `;
 
 export const MainBlock = styled.div`

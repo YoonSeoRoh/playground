@@ -35,8 +35,9 @@ export default function Main() {
         </S.Title>
       </S.IntroBlock>
       <>
-        <S.Category>모임 찾기</S.Category>
-        {contentsData && contentsData.length !== 0 ? (
+        {contentsLoading ? (
+          <Loading />
+        ) : contentsData && contentsData.length !== 0 ? (
           <S.MainBlock>
             {contentsData?.map((item, index) => (
               <Card key={index} data={item} />
@@ -49,7 +50,6 @@ export default function Main() {
             iconSize="large"
           />
         )}
-        {contentsLoading && <Loading />}
       </>
     </S.Container>
   );

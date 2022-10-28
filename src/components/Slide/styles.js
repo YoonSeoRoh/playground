@@ -5,13 +5,16 @@ export const SlideContainer = styled.section`
   .slick-slide {
     display: inline-block;
   }
+  .slick-list {
+    margin: 0 -5px;
+  }
 `;
 
 export const Slide = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   img {
     display: inline-block;
-    width: 460px;
+    width: 480px;
     height: 400px;
   }
 `;
