@@ -1,1 +1,1 @@
-export const apiBaseUrl = "https://socialweb-playground.herokuapp.com/";
+export const apiBaseUrl = "https://socialweb-playground.herokuapp.com";
