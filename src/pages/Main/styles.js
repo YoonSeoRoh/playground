@@ -7,7 +7,6 @@ export const Container = styled.section`
 
 export const IntroBlock = styled.div`
   position: relative;
-  height: 100vh;
   padding: 30px;
 `;
 

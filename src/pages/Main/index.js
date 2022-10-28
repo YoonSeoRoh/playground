@@ -13,15 +13,9 @@ import * as S from "./styles";
 export default function Main() {
   const dispatch = useDispatch();
 
-  const { contentsData, contentsLoading, contentsDone } = useSelector(
+  const { contentsData, contentsLoading } = useSelector(
     (state) => state.content
   );
-
-  // useEffect(() => {
-  //   if (!contentsDone) {
-  //     dispatch(getContentsThunk());
-  //   }
-  // }, );
 
   useEffect(() => {
     dispatch(getContentsThunk());
