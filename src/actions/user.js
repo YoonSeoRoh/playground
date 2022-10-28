@@ -1,7 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { apiBaseUrl } from "../libs/config";
 
 export const loginThunk = createAsyncThunk("LOGIN", async (formData) => {
-  const response = await fetch("http://localhost:4444/login", {
+  const response = await fetch(`${apiBaseUrl}/login`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -14,7 +15,7 @@ export const loginThunk = createAsyncThunk("LOGIN", async (formData) => {
 });
 
 export const signupThunk = createAsyncThunk("SIGN_UP", async (formData) => {
-  const response = await fetch("http://localhost:4444/register", {
+  const response = await fetch(`${apiBaseUrl}/register`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -29,7 +30,7 @@ export const signupThunk = createAsyncThunk("SIGN_UP", async (formData) => {
 export const editJoinedThunk = createAsyncThunk(
   "ADD_JOINED",
   async (formData) => {
-    const response = await fetch(`http://localhost:4444/users/${formData.id}`, {
+    const response = await fetch(`${apiBaseUrl}/${formData.id}`, {
       method: "PATCH",
       headers: {
         Accept: "application/json",
@@ -47,9 +48,7 @@ export const editJoinedThunk = createAsyncThunk(
 export const getMyContentsThunk = createAsyncThunk(
   "GET_MYCONTENTS",
   async (email) => {
-    const response = await fetch(
-      `http://localhost:4444/mainContent?email=${email}`
-    );
+    const response = await fetch(`${apiBaseUrl}/mainContent?email=${email}`);
     const data = await response.json();
     return data;
   }
@@ -58,9 +57,7 @@ export const getMyContentsThunk = createAsyncThunk(
 export const getMyCommentsThunk = createAsyncThunk(
   "GET_MYCOMMENTS",
   async (email) => {
-    const response = await fetch(
-      `http://localhost:4444/comment?email=${email}`
-    );
+    const response = await fetch(`${apiBaseUrl}/comment?email=${email}`);
     const data = await response.json();
     return data;
   }

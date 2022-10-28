@@ -1,13 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { apiBaseUrl } from "../libs/config";
 
 export const getContentsThunk = createAsyncThunk("GET_CONTENTS", async () => {
-  const response = await fetch("http://localhost:4444/mainContent");
+  const response = await fetch(`${apiBaseUrl}/mainContent`);
   const data = await response.json();
   return data;
 });
 
 export const getContentThunk = createAsyncThunk("GET_CONTENT", async (id) => {
-  const response = await fetch(`http://localhost:4444/mainContent/${id}`);
+  const response = await fetch(`${apiBaseUrl}/mainContent/${id}`);
   const data = await response.json();
   return data;
 });
@@ -15,7 +16,7 @@ export const getContentThunk = createAsyncThunk("GET_CONTENT", async (id) => {
 export const addContentThunk = createAsyncThunk(
   "ADD_CONTENT",
   async (formData) => {
-    const response = await fetch("http://localhost:4444/mainContent", {
+    const response = await fetch(`${apiBaseUrl}/mainContent`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -31,7 +32,7 @@ export const addContentThunk = createAsyncThunk(
 export const deleteContentThunk = createAsyncThunk(
   "DELETE_CONTENT",
   async (id) => {
-    const response = await fetch(`http://localhost:4444/mainContent/${id}`, {
+    const response = await fetch(`${apiBaseUrl}/mainContent/${id}`, {
       method: "DELETE",
     });
     const data = await response.json();
@@ -40,9 +41,24 @@ export const deleteContentThunk = createAsyncThunk(
 );
 
 export const addJoinThunk = createAsyncThunk("ADD_JOIN", async (formData) => {
-  const response = await fetch(
-    `http://localhost:4444/mainContent/${formData.id}`,
-    {
+  const response = await fetch(`${apiBaseUrl}/mainContent/${formData.id}`, {
+    method: "PATCH",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      joined: formData.joined,
+    }),
+  });
+  const data = await response.json();
+  return data;
+});
+
+export const deleteJoinThunk = createAsyncThunk(
+  "DELETE_JOIN",
+  async (formData) => {
+    const response = await fetch(`${apiBaseUrl}/mainContent/${formData.id}`, {
       method: "PATCH",
       headers: {
         Accept: "application/json",
@@ -51,28 +67,7 @@ export const addJoinThunk = createAsyncThunk("ADD_JOIN", async (formData) => {
       body: JSON.stringify({
         joined: formData.joined,
       }),
-    }
-  );
-  const data = await response.json();
-  return data;
-});
-
-export const deleteJoinThunk = createAsyncThunk(
-  "DELETE_JOIN",
-  async (formData) => {
-    const response = await fetch(
-      `http://localhost:4444/mainContent/${formData.id}`,
-      {
-        method: "PATCH",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          joined: formData.joined,
-        }),
-      }
-    );
+    });
     const data = await response.json();
     return data;
   }
@@ -82,7 +77,7 @@ export const getCommentsThunk = createAsyncThunk(
   "GET_COMMENTS",
   async (contentId) => {
     const response = await fetch(
-      `http://localhost:4444/comment?contentId=${contentId}`
+      `${apiBaseUrl}/comment?contentId=${contentId}`
     );
     const data = await response.json();
     return data;
@@ -92,7 +87,7 @@ export const getCommentsThunk = createAsyncThunk(
 export const addCommentThunk = createAsyncThunk(
   "ADD_COMMENT",
   async (formData) => {
-    const response = await fetch("http://localhost:4444/comment", {
+    const response = await fetch(`${apiBaseUrl}/comment`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -108,7 +103,7 @@ export const addCommentThunk = createAsyncThunk(
 export const deleteCommentThunk = createAsyncThunk(
   "DELETE_COMMENT",
   async (id) => {
-    const response = await fetch(`http://localhost:4444/comment/${id}`, {
+    const response = await fetch(`${apiBaseUrl}/comment/${id}`, {
       method: "DELETE",
     });
     const data = await response.json();
