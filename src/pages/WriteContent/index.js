@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -30,13 +30,8 @@ export default function WriteContent() {
   const dispatch = useDispatch();
 
   const { loginData } = useSelector((state) => state.user);
-  const {
-    contentData,
-    addContent,
-    addContentDone,
-    editingContent,
-    editContentDone,
-  } = useSelector((state) => state.content);
+  const { contentData, addContent, editingContent, editContentDone } =
+    useSelector((state) => state.content);
 
   const [modal, setModal] = useState(false);
   const [msg, setMsg] = useState("");
@@ -147,6 +142,13 @@ export default function WriteContent() {
     navigate("/login");
   }, [modal, navigate]);
 
+  const handleHome = useCallback(() => {
+    if (editingContent) {
+      dispatch(editContent(false));
+    }
+    navigate("/");
+  }, [dispatch, editingContent, navigate]);
+
   useEffect(() => {
     if (paramsId && editingContent) {
       dispatch(getContentThunk(parseInt(paramsId)));
@@ -197,11 +199,13 @@ export default function WriteContent() {
         />
         <S.ButtonContainer>
           <S.ButtonBlock>
-            <Link to="/">
-              <Button buttonStyle="transparent" textSize="large">
-                홈으로
-              </Button>
-            </Link>
+            <Button
+              buttonStyle="transparent"
+              textSize="large"
+              onClick={handleHome}
+            >
+              홈으로
+            </Button>
           </S.ButtonBlock>
           <S.ButtonBlock>
             <Button
