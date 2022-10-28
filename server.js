@@ -1,24 +1,22 @@
 const jsonServer = require("json-server");
+const path = require("path");
 const auth = require("json-server-auth");
-const server = jsonServer.create();
-const router = jsonServer.router("db.json");
 
+const server = jsonServer.create();
+const router = jsonServer.router(path.resolve(__dirname + "/db.json"));
 const middlewares = jsonServer.defaults({
-  static: "./build",
+  static: path.resolve(__dirname + "/../build/"),
 });
+
+const port = process.env.PORT || 3001;
+
+server.use(middlewares);
+server.use(jsonServer.bodyParser);
 
 server.db = router.db;
 
 server.use(auth);
 server.use(router);
-server.use(middlewares);
-
-server.use(
-  jsonServer.rewriter({
-    "/api/*": "/$1",
-  })
-);
-
-server.listen(process.env.PORT || 4000, () => {
-  console.log("server is running");
+server.listen(port, () => {
+  console.log("JSON Server is running");
 });

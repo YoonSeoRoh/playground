@@ -150,7 +150,7 @@ export default function WriteContent() {
               buttonStyle="primary"
               textSize="large"
             >
-              모임 열기
+              {contentData ? "수정하기" : "모임 열기"}
             </Button>
           </S.ButtonBlock>
         </S.ButtonContainer>
