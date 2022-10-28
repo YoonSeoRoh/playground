@@ -9,6 +9,7 @@ import {
   deleteJoinThunk,
 } from "../../actions/content";
 import { editJoinedThunk } from "../../actions/user";
+import { apiBaseUrl } from "../../libs/config";
 
 import Button from "../../components/Button";
 import ModalAlert from "../../components/ModalAlert";
@@ -100,7 +101,7 @@ const Content = ({ data, paramsId }) => {
   }, [dispatch, paramsId]);
 
   const handleShare = useCallback(() => {
-    let shareLink = `http://localhost:3000/content/${paramsId}`;
+    let shareLink = `${apiBaseUrl}/${paramsId}`;
     if (window.Kakao) {
       const kakao = window.Kakao;
       if (!kakao.isInitialized()) {
