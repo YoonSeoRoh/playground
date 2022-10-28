@@ -6,7 +6,7 @@ export const GlobalStyle = createGlobalStyle`
     *{
         box-sizing: border-box;
     }
-    body{
+    body, html{
         margin: 0;
         padding: 0;
         width: 100%;
