@@ -144,7 +144,7 @@ const Content = ({ data, paramsId }) => {
       <S.Title>{title}</S.Title>
       <S.InfoBlock>
         <S.ImageWrapper>
-          <img src={Example} alt="샘플" />
+          <img src={Example} alt="글 표지" />
         </S.ImageWrapper>
         <S.DetailBlock>
           <p>모집 인원</p>

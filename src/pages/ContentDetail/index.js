@@ -18,8 +18,12 @@ import Content from "../../components/Content";
 import Comment from "../../components/Comment";
 import Input from "../../components/Input";
 import ModalAlert from "../../components/ModalAlert";
+import ModalDropDown from "../../components/ModalDropDown";
 
 import * as S from "./styles";
+import More from "../../assets/ic_more.png";
+import Write from "../../assets/ic_write.png";
+import Delete from "../../assets/ic_delete.png";
 
 const ContentDetail = () => {
   const params = useParams();
@@ -44,6 +48,8 @@ const ContentDetail = () => {
 
   const [modal, setModal] = useState(false);
   const [msg, setMsg] = useState("");
+
+  const [menu, setMenu] = useState(false);
 
   const handleChange = ({ name, value }) => {
     setValue(name, value, { shouldValidate: true });
@@ -76,6 +82,10 @@ const ContentDetail = () => {
     navigate("/");
   }, [modal, navigate]);
 
+  const handleMenu = useCallback(() => {
+    setMenu(!menu);
+  }, [menu]);
+
   useEffect(() => {
     dispatch(getContentThunk(parseInt(paramsId)));
     dispatch(getCommentsThunk(parseInt(paramsId)));
@@ -89,29 +99,48 @@ const ContentDetail = () => {
   }, [contentData]);
 
   return (
-    <>
+    <S.Container>
       {contentData && (
-        <S.Container>
-          <Content data={contentData} paramsId={paramsId} />
-          <S.CommentBlock>
-            {commentsData?.map((item) => (
-              <Comment key={item.id} data={item} />
-            ))}
-          </S.CommentBlock>
-          <S.WriteBlock>
-            <Input
-              inputStyle="border"
-              placeholder="댓글을 입력하세요."
-              {...register("comment")}
-              onChange={handleChange}
-            />
-            <S.WriteButtonWrapper>
-              <Button onClick={handleWrite} buttonStyle="primary">
-                댓글 작성
-              </Button>
-            </S.WriteButtonWrapper>
-          </S.WriteBlock>
-        </S.Container>
+        <>
+          <S.MenuBlock>
+            <S.Menu>
+              <img src={More} alt="메뉴" onClick={handleMenu} />
+              <S.ModalWrpper>
+                <ModalDropDown menuShow={menu}>
+                  <S.MenuItem>
+                    수정하기
+                    <img src={Write} alt="수정" />
+                  </S.MenuItem>
+                  <S.MenuItem delete>
+                    삭제하기
+                    <img src={Delete} alt="삭제" />
+                  </S.MenuItem>
+                </ModalDropDown>
+              </S.ModalWrpper>
+            </S.Menu>
+          </S.MenuBlock>
+          <S.InnerContainer>
+            <Content data={contentData} paramsId={paramsId} />
+            <S.CommentBlock>
+              {commentsData?.map((item) => (
+                <Comment key={item.id} data={item} />
+              ))}
+            </S.CommentBlock>
+            <S.WriteBlock>
+              <Input
+                inputStyle="border"
+                placeholder="댓글을 입력하세요."
+                {...register("comment")}
+                onChange={handleChange}
+              />
+              <S.WriteButtonWrapper>
+                <Button onClick={handleWrite} buttonStyle="primary">
+                  댓글 작성
+                </Button>
+              </S.WriteButtonWrapper>
+            </S.WriteBlock>
+          </S.InnerContainer>
+        </>
       )}
       {contentLoading && <Loading />}
       <ModalAlert
@@ -120,7 +149,7 @@ const ContentDetail = () => {
         buttonTitle="확인"
         onClick={handleModal}
       />
-    </>
+    </S.Container>
   );
 };
 

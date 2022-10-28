@@ -51,11 +51,11 @@ const Comment = ({ data }) => {
               buttonStyle="edit"
               textSize="sm"
             >
-              수정
+              수정하기
             </Button>
           </S.EditButtonWrapper>
           <S.DeleteButtonWrapper>
-            <Button onClick={handleDelete}>삭제</Button>
+            <Button onClick={handleDelete}>삭제하기</Button>
           </S.DeleteButtonWrapper>
         </>
       )}

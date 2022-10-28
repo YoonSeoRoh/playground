@@ -77,11 +77,11 @@ export default function WriteContent() {
     navigate("/login");
   }, [modal, navigate]);
 
-  useEffect(() => {
-    if (!loginData) {
-      navigate("/");
-    }
-  });
+  // useEffect(() => {
+  //   if (!loginData) {
+  //     navigate("/");
+  //   }
+  // });
 
   useEffect(() => {
     if (addContent) {

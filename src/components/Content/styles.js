@@ -3,8 +3,8 @@ import styled from "styled-components";
 export const Category = styled.h2`
   padding: 20px 0;
   color: ${({ theme }) => theme.colors.primary};
-  font-size: ${({ theme }) => theme.fontSizes.xs};
-  font-weight: ${({ theme }) => theme.fontWeights.sm};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  font-weight: ${({ theme }) => theme.fontWeights.base};
 `;
 
 export const Title = styled.h1`

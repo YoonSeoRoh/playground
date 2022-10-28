@@ -10,7 +10,7 @@ const colors = {
   gray: "#888888",
   lightGray: "#dddddd",
   lighterGray: "#f0f0f3",
-  red: "#ff6464",
+  red: "#ff4646",
   white: "#ffffff",
 };
 
