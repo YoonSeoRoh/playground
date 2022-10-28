@@ -27,6 +27,7 @@ export const Menu = styled.section`
 `;
 
 export const MenuItem = styled.div`
+  cursor: pointer;
   width: 100%;
   display: flex;
   justify-content: space-between;

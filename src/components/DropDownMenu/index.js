@@ -11,7 +11,11 @@ const DropDownMenu = (props) => {
 
   return (
     <section>
-      <S.Select onChange={handleDataChange} selected={data}>
+      <S.Select
+        onChange={handleDataChange}
+        selected={data}
+        defaultValue={props.defaultValue}
+      >
         {props.data.map((option) => (
           <option key={parseInt(option.id)} value={option.title}>
             {option.title}

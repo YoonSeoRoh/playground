@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { tabList } from "../../libs/data/tabList";
 import { cityList } from "../../libs/data/cityList";
 import { writeValidation } from "../../libs/validations/writeValidation";
-import { addContentThunk } from "../../actions/content";
+import { getContentThunk, addContentThunk } from "../../actions/content";
 
 import DropDownMenu from "../../components/DropDownMenu";
 import Input from "../../components/Input";
@@ -18,10 +18,14 @@ import ModalAlert from "../../components/ModalAlert";
 import * as S from "./styles";
 
 export default function WriteContent() {
+  const { state } = useLocation();
+  const paramsId = parseInt(state);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const { loginData } = useSelector((state) => state.user);
-  const { addContent } = useSelector((state) => state.content);
+  const { contentData, addContent } = useSelector((state) => state.content);
 
   const [modal, setModal] = useState(false);
   const [msg, setMsg] = useState("");
@@ -77,6 +81,12 @@ export default function WriteContent() {
     navigate("/login");
   }, [modal, navigate]);
 
+  useEffect(() => {
+    if (paramsId) {
+      dispatch(getContentThunk(parseInt(paramsId)));
+    }
+  }, [contentData, dispatch, paramsId]);
+
   // useEffect(() => {
   //   if (!loginData) {
   //     navigate("/");
@@ -91,11 +101,20 @@ export default function WriteContent() {
 
   return (
     <S.WriteContainer>
-      <DropDownMenu data={tabList} getData={getCategory} />
-      <DropDownMenu data={cityList} getData={getCity} />
+      <DropDownMenu
+        data={tabList}
+        getData={getCategory}
+        defaultValue={contentData && contentData.category}
+      />
+      <DropDownMenu
+        data={cityList}
+        getData={getCity}
+        defaultValue={contentData && contentData.location}
+      />
       <form>
         <S.Label>모집 인원</S.Label>
         <Input
+          defaultValue={contentData && contentData.join}
           placeholder="모집 인원을 숫자로 입력하세요."
           inputStyle="border"
           {...register("join")}
@@ -103,6 +122,7 @@ export default function WriteContent() {
         />
         <S.Label>제목</S.Label>
         <Input
+          defaultValue={contentData && contentData.title}
           placeholder="제목을 입력하세요."
           inputStyle="border"
           {...register("title")}
@@ -110,6 +130,7 @@ export default function WriteContent() {
         />
         <S.Label>내용</S.Label>
         <ContentForm
+          defaultValue={contentData && contentData.content}
           placeholder="모임에 대한 소개를 해주세요.(목적, 일시 등)"
           {...register("content")}
           onChange={handleChange}

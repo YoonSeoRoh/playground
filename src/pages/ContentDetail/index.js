@@ -10,6 +10,7 @@ import {
   getContentThunk,
   getCommentsThunk,
   addCommentThunk,
+  deleteContentThunk,
 } from "../../actions/content";
 
 import Loading from "../../components/Loading";
@@ -77,6 +78,19 @@ const ContentDetail = () => {
     reset();
   }, [dispatch, getValues, isValid, loginData, paramsId, reset]);
 
+  const handleEdit = useCallback(() => {
+    navigate("/writecontent", {
+      state: paramsId,
+    });
+  }, [navigate, paramsId]);
+
+  const handleDelete = useCallback(() => {
+    setMenu(!menu);
+    dispatch(deleteContentThunk(paramsId));
+    setModal(true);
+    setMsg("삭제되었습니다.");
+  }, [dispatch, menu, paramsId]);
+
   const handleModal = useCallback(() => {
     setModal(!modal);
     navigate("/");
@@ -107,11 +121,11 @@ const ContentDetail = () => {
               <img src={More} alt="메뉴" onClick={handleMenu} />
               <S.ModalWrpper>
                 <ModalDropDown menuShow={menu}>
-                  <S.MenuItem>
+                  <S.MenuItem onClick={handleEdit}>
                     수정하기
                     <img src={Write} alt="수정" />
                   </S.MenuItem>
-                  <S.MenuItem delete>
+                  <S.MenuItem delete onClick={handleDelete}>
                     삭제하기
                     <img src={Delete} alt="삭제" />
                   </S.MenuItem>
